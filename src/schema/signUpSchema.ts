@@ -11,13 +11,16 @@ function calculateEntropy(password: string): number {
 }
 
 export const signUpSchema = z.object({
-    fullname: z.string().trim().nonempty(), // Although rare, there are people with 1-letter names
-    email: z.email().trim(),
-    password: z.string().min(8).refine((val) => calculateEntropy(val) >= 60, {
-        error: (iss) => `Your password contains ${calculateEntropy(iss.input as string)} bits of entropy, but must contain 60 or more`
+    firstName: z.string().trim().nonempty("This field is required"), // Although rare, there are people with 1-letter names
+    lastName: z.string().trim().nonempty("This field is required"),
+    email: z.email("Invalid email address").trim(),
+    password: z.string().min(8, "Password must be at least 8 characters").refine((val) => calculateEntropy(val) >= 60, {
+        error: (iss) => `Your password contains ${Math.floor(calculateEntropy(iss.input as string))} bits of entropy, but must contain 60 or more`
     }),
     confirmPassword: z.string().min(8)
 }).refine((data) => data.password === data.confirmPassword, {
     error: "Passwords don't match",
     path: ["confirmPassword"],
 });
+
+export type SignUpForm = z.infer<typeof signUpSchema>
