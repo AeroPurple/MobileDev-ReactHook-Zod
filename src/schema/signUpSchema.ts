@@ -13,7 +13,9 @@ function calculateEntropy(password: string): number {
 export const signUpSchema = z.object({
     fullname: z.string().trim().nonempty(), // Although rare, there are people with 1-letter names
     email: z.email().trim(),
-    password: z.string().min(8).refine((val) => calculateEntropy(val) >= 60),
+    password: z.string().min(8).refine((val) => calculateEntropy(val) >= 60, {
+        error: (iss) => `Your password contains ${calculateEntropy(iss.input as string)} bits of entropy, but must contain 60 or more`
+    }),
     confirmPassword: z.string().min(8)
 }).refine((data) => data.password === data.confirmPassword, {
     error: "Passwords don't match",
