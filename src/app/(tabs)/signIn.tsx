@@ -1,9 +1,45 @@
-import { Text, View, StyleSheet } from "react-native";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { SignUpForm, signUpSchema } from "../schema/schema";
 
-export default function Index() {
+export default function signIn() {
+  const {
+      control,
+      handleSubmit,
+      formState: { errors },
+  }=useForm<SignUpForm>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      email: "",
+      password: ""
+    },
+    mode: "onChange"
+  })
+
+  const onSubmit = () => {
+    Alert.alert("Welcome back!");
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Edit src/app/(tabs)/signIn.tsx to edit this screen.</Text>
+      <Text>Email address</Text>
+      <Controller control={control} name="email" render={({ field: { onChange, value } }) => (
+        <TextInput value={value} onChangeText={onChange} placeholder="your@email.com" />
+      )} />
+      {errors.email && (
+        <Text>{errors.email.message}</Text>
+      )}
+      <Text>Password</Text>
+      <Controller control={control} name="password" render={({ field: { onChange, value } }) => (
+        <TextInput secureTextEntry={true} value={value} onChangeText={onChange} placeholder="Passw0rd" />
+      )} />
+      {errors.password && (
+        <Text>{errors.password.message}</Text>
+      )}
+      <Pressable onPress={() => void handleSubmit(onSubmit)()}>
+        <Text>Sign in</Text>
+      </Pressable>
     </View>
   );
 }
