@@ -1,4 +1,3 @@
-
 import { Text, View, StyleSheet, TextInput, Pressable, Alert } from "react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -75,5 +74,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  
 });
