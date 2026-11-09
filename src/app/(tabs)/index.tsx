@@ -2,7 +2,7 @@ import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
  
-import { employeeSchema, EmployeeFormData } from '@/schemas/employee';
+import { employeeSchema, EmployeeFormData } from '@/schema/employee';
  
 export default function EmployeeScreen() {
   const {

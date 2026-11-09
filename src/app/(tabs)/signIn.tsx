@@ -1,15 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { SignUpForm, signUpSchema } from "../schema/schema";
+import { SignInForm, signInSchema } from "@/schema/signInSchema";
 
 export default function signIn() {
   const {
       control,
       handleSubmit,
       formState: { errors },
-  }=useForm<SignUpForm>({
-    resolver: zodResolver(signUpSchema),
+  }=useForm<SignInForm>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
       password: ""
